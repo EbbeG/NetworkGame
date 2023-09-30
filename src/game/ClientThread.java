@@ -18,9 +18,14 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         while (true) {
             try {
-                Thread.sleep(3000);
                 String serverResponse = inFromServer.readLine();
                 System.out.println(serverResponse + " from clientthread");
 
@@ -31,8 +36,7 @@ public class ClientThread extends Thread {
 
                 Gui.updateFromServer(serverResponse); // pass serverUpdate as a list of players
 
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
