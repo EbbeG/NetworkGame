@@ -1,8 +1,8 @@
-package Serverskeleton;
+package server;
 import java.io.*;
 import java.net.*;
 // Denne er kun medtaget til Test-formål, skal IKKE anvendes.
-public class TCPClient {
+public class Client {
 
 	public static void main(String argv[]) throws Exception{
 		String sentence;
