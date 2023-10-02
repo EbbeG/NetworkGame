@@ -113,28 +113,31 @@ public class Gui extends Application {
             primaryStage.show();
 
             scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                switch (event.getCode()) {
-                    case UP:
-                        playerMoved(0, -1, "up");
-                        try {
+                try {
+                    switch (event.getCode()) {
+                        case UP:
+                            playerMoved(0, -1, "up");
                             outToServer.writeBytes("up" + "\n");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        break;
-                    case DOWN:
-                        playerMoved(0, +1, "down");
-                        break;
-                    case LEFT:
-                        playerMoved(-1, 0, "left");
-                        break;
-                    case RIGHT:
-                        playerMoved(+1, 0, "right");
-                        break;
-                    case ESCAPE:
-                        System.exit(0);
-                    default:
-                        break;
+                            break;
+                        case DOWN:
+                            playerMoved(0, +1, "down");
+                            outToServer.writeBytes("down" + "\n");
+                            break;
+                        case LEFT:
+                            playerMoved(-1, 0, "left");
+                            outToServer.writeBytes("left" + "\n");
+                            break;
+                        case RIGHT:
+                            playerMoved(+1, 0, "right");
+                            outToServer.writeBytes("right" + "\n");
+                            break;
+                        case ESCAPE:
+                            System.exit(0);
+                        default:
+                            break;
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             });
 

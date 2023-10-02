@@ -32,8 +32,20 @@ public class ServerThread extends Thread{
 				clientSentence = inFromClient.readLine();
 				System.out.println(clientSentence);
 
+				// move collision logic here or move it to server?
+
 				if (clientSentence.equals("up")) {
 					player.setYpos(player.getYpos() - 1);
+					player.setDirection("up");
+				} else if (clientSentence.equals("down")) {
+					player.setYpos(player.getYpos() + 1);
+					player.setDirection("down");
+				} else if (clientSentence.equals("right")) {
+					player.setXpos(player.getXpos() + 1);
+					player.setDirection("right");
+				} else if (clientSentence.equals("left")) {
+					player.setXpos(player.getXpos() - 1);
+					player.setDirection("left");
 				}
 
 				Server.update(); // opdater player her, update notificierer bare de andre threads
