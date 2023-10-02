@@ -116,19 +116,19 @@ public class Gui extends Application {
                 try {
                     switch (event.getCode()) {
                         case UP:
-                            playerMoved(0, -1, "up");
+                            //playerMoved(0, -1, "up");
                             outToServer.writeBytes("up" + "\n");
                             break;
                         case DOWN:
-                            playerMoved(0, +1, "down");
+                            //playerMoved(0, +1, "down");
                             outToServer.writeBytes("down" + "\n");
                             break;
                         case LEFT:
-                            playerMoved(-1, 0, "left");
+                            //playerMoved(-1, 0, "left");
                             outToServer.writeBytes("left" + "\n");
                             break;
                         case RIGHT:
-                            playerMoved(+1, 0, "right");
+                            //playerMoved(+1, 0, "right");
                             outToServer.writeBytes("right" + "\n");
                             break;
                         case ESCAPE:
@@ -142,9 +142,9 @@ public class Gui extends Application {
             });
 
             // Putting default players on screen
-            for (int i = 0; i < GameLogic.players.size(); i++) {
-                fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
-            }
+//            for (int i = 0; i < GameLogic.players.size(); i++) {
+//                fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
+//            }
             scoreList.setText(getScoreList());
         } catch (Exception e) {
             e.printStackTrace();
