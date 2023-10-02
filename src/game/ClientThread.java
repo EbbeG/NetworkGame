@@ -34,7 +34,7 @@ public class ClientThread extends Thread {
                 System.out.println("Players from clientthread");
                 System.out.println(players);
 
-                Gui.updateFromServer(serverResponse); // pass serverUpdate as a list of players
+                Gui.updateFromServer(players);
 
 
             } catch (IOException e) {

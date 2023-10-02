@@ -12,6 +12,7 @@ import java.util.List;
 public class Server {
 	public static List<Player> players = new ArrayList<>();
 	public static List<ServerThread> serverThreads = new ArrayList<>();
+	public static ObjectMapper objectMapper = new ObjectMapper();
 	
 	/**
 	 * @param args
@@ -42,7 +43,6 @@ public class Server {
 	}
 
 	public synchronized static void update() {
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			String json = objectMapper.writeValueAsString(players);
 			System.out.println(json + "From server");

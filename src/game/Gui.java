@@ -13,8 +13,11 @@ import javafx.scene.text.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Gui extends Application {
 
@@ -29,6 +32,8 @@ public class Gui extends Application {
 
     private static Label[][] fields;
     private TextArea scoreList;
+
+    private static List<Player> oldPlayers = new ArrayList<>();
 
 
     // -------------------------------------------
@@ -111,6 +116,11 @@ public class Gui extends Application {
                 switch (event.getCode()) {
                     case UP:
                         playerMoved(0, -1, "up");
+                        try {
+                            outToServer.writeBytes("up" + "\n");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         break;
                     case DOWN:
                         playerMoved(0, +1, "down");
@@ -192,8 +202,17 @@ public class Gui extends Application {
         return b.toString();
     }
 
-    public static void updateFromServer(String serverInfo) {
-        System.out.println(serverInfo + " from gui");
+    public static void updateFromServer(List<Player> players) {
+        System.out.println(players + " from gui");
+        // remove all players on the screen
+        for (Player player : oldPlayers) {
+            removePlayerOnScreen(player.location);
+        }
+        // redraw all players on the screen
+        for (Player player : players) {
+            placePlayerOnScreen(player.location, player.direction);
+        }
+        oldPlayers = players;
     }
 
 

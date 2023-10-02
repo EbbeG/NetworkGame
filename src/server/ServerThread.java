@@ -9,6 +9,7 @@ public class ServerThread extends Thread{
 	Socket connSocket;
 	common c;
 	DataOutputStream outToClient;
+	Player player;
 	
 	public ServerThread(Socket connSocket,common c) {
 		this.connSocket = connSocket;
@@ -26,11 +27,14 @@ public class ServerThread extends Thread{
 			System.out.println(clientSentence);
 
 			makePlayer(clientSentence);
-			Server.update();
 
 			while (true) {
 				clientSentence = inFromClient.readLine();
 				System.out.println(clientSentence);
+
+				if (clientSentence.equals("up")) {
+					player.setYpos(player.getYpos() - 1);
+				}
 
 				Server.update(); // opdater player her, update notificierer bare de andre threads
 			}
@@ -43,8 +47,9 @@ public class ServerThread extends Thread{
 
 	private void makePlayer(String name) {
 		Pair p = GameLogic.getRandomFreePosition();
-		Player player = new Player(name,p,"up");
+		player = new Player(name,p,"up");
 		Server.addPlayer(player);
+		Server.update();
 
 	}
 
