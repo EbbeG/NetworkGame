@@ -50,8 +50,8 @@ public class Gui extends Application {
             String hostIp = inFromUser.readLine();
             System.out.println("Indtast port-nummer");
             int portNummer = Integer.parseInt(inFromUser.readLine());
-            //Socket clientSocket = new Socket(hostIp, portNummer);
-            Socket clientSocket = new Socket("localhost", 6789);
+            Socket clientSocket = new Socket(hostIp, portNummer);
+            //Socket clientSocket = new Socket("localhost", 6789);
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             System.out.println("Indtast spillernavn");
