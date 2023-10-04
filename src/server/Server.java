@@ -108,6 +108,7 @@ public class Server {
 
 	public synchronized static void playerLeft(Player player, ServerThread serverThread) {
 		// need to remove serverthread???
+		serverThreads.remove(serverThread);
 		players.remove(player);
 		Server.update();
 	}
