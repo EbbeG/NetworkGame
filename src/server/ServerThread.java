@@ -20,8 +20,7 @@ public class ServerThread extends Thread{
 			outToClient = new DataOutputStream(connSocket.getOutputStream());
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 
-			// Do the work and the communication with the client here	
-			// The following two lines are only an example
+
 			
 			String clientSentence = inFromClient.readLine();
 			System.out.println(clientSentence);
@@ -35,20 +34,15 @@ public class ServerThread extends Thread{
 				// move collision logic here or move it to server?
 
 				if (clientSentence.equals("up")) {
-					player.setYpos(player.getYpos() - 1);
-					player.setDirection("up");
+					Server.playerMoved(0, -1, "up", player);
 				} else if (clientSentence.equals("down")) {
-					player.setYpos(player.getYpos() + 1);
-					player.setDirection("down");
+					Server.playerMoved(0, 1, "down", player);
 				} else if (clientSentence.equals("right")) {
-					player.setXpos(player.getXpos() + 1);
-					player.setDirection("right");
+					Server.playerMoved(1, 0, "right", player);
 				} else if (clientSentence.equals("left")) {
-					player.setXpos(player.getXpos() - 1);
-					player.setDirection("left");
+					Server.playerMoved(-1, 0, "left", player);
 				}
 
-				Server.update(); // opdater player her, update notificierer bare de andre threads
 			}
 		
 		} catch (IOException e) {
