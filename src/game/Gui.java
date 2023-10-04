@@ -132,6 +132,7 @@ public class Gui extends Application {
                             outToServer.writeBytes("right" + "\n");
                             break;
                         case ESCAPE:
+                            outToServer.writeBytes("exit" + "\n");
                             System.exit(0);
                         default:
                             break;

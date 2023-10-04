@@ -105,4 +105,10 @@ public class Server {
 		Pair p = new Pair(x,y);
 		return p;
 	}
+
+	public synchronized static void playerLeft(Player player, ServerThread serverThread) {
+		// need to remove serverthread???
+		players.remove(player);
+		Server.update();
+	}
 }

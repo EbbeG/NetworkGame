@@ -31,7 +31,7 @@ public class ServerThread extends Thread{
 				clientSentence = inFromClient.readLine();
 				System.out.println(clientSentence);
 
-				// move collision logic here or move it to server?
+
 
 				if (clientSentence.equals("up")) {
 					Server.playerMoved(0, -1, "up", player);
@@ -41,6 +41,9 @@ public class ServerThread extends Thread{
 					Server.playerMoved(1, 0, "right", player);
 				} else if (clientSentence.equals("left")) {
 					Server.playerMoved(-1, 0, "left", player);
+				} else { // player left
+					Server.playerLeft(player, this);
+					break;
 				}
 
 			}
