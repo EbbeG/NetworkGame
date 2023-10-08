@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import game.*;
 
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Server {
 	public static List<Player> players = new ArrayList<>();
 	public static List<ServerThread> serverThreads = new ArrayList<>();
+	public static List<Pair> gems = new ArrayList<>();
 	public static ObjectMapper objectMapper = new ObjectMapper();
 	
 	/**
@@ -19,6 +18,17 @@ public class Server {
 	public static void main(String[] args)throws Exception {
 		common c = new common("eksempel");
 		ServerSocket welcomeSocket = new ServerSocket(6789);
+
+		Timer gemSpawnTimer = new Timer();
+		gemSpawnTimer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				Pair gemLocation = getRandomFreePosition();
+				gems.add(gemLocation);
+				Server.gemUpdate();
+			}
+		}, 20000, 5000);
+
 		while (true) {
 			Socket connectionSocket = welcomeSocket.accept();
 			ServerThread serverThread = new ServerThread(connectionSocket,c);
@@ -81,7 +91,7 @@ public class Server {
 		return null;
 	}
 
-	public static Pair getRandomFreePosition()
+	public synchronized static Pair getRandomFreePosition()
 	// finds a random new position which is not wall
 	// and not occupied by other players
 	{
@@ -99,6 +109,10 @@ public class Server {
 					if (p.getXpos()==x && p.getYpos()==y) //pladsen optaget af en anden
 						foundfreepos = false;
 				}
+				for (Pair gem : gems) {
+					if (gem.getX() == x && gem.getY()==y) // gem på placering
+						foundfreepos = false;
+				}
 
 			}
 		}
@@ -111,5 +125,18 @@ public class Server {
 		serverThreads.remove(serverThread);
 		players.remove(player);
 		Server.update();
+	}
+
+	private synchronized static void gemUpdate() {
+		try {
+			String json = "gems" + objectMapper.writeValueAsString(gems);
+			System.out.println("gem JSON " + json);
+			for (ServerThread serverThread : serverThreads) {
+				serverThread.update(json);
+			}
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 }

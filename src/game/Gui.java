@@ -35,6 +35,7 @@ public class Gui extends Application {
     private static TextArea scoreList;
 
     private static List<Player> oldPlayers = new ArrayList<>();
+    private static List<Pair> oldGems = new ArrayList<>();
 
 
     // -------------------------------------------
@@ -220,6 +221,24 @@ public class Gui extends Application {
         }
         oldPlayers = players;
         updateScoreTable();
+    }
+
+    public static void updateGems(List<Pair> gems) {
+        // remove all gems on the screen
+        for (Pair gem : oldGems) {
+
+        }
+        // redraw all gems
+        for (Pair gem : gems) {
+            placeGemOnScreen(gem);
+        }
+        oldGems = gems;
+        updateScoreTable();
+
+    }
+
+    public static void placeGemOnScreen(Pair pos) {
+        Platform.runLater(() -> fields[pos.x][pos.y].setGraphic(new ImageView(image_gem)));
     }
 
 

@@ -29,12 +29,20 @@ public class ClientThread extends Thread {
                 String serverResponse = inFromServer.readLine();
                 System.out.println(serverResponse + " from clientthread");
 
-                List<Player> players = objectMapper.readValue(serverResponse, new TypeReference<>(){});
+                if (!serverResponse.contains("gems")) {
+                    List<Player> players = objectMapper.readValue(serverResponse, new TypeReference<>() {});
 
-                System.out.println("Players from clientthread");
-                System.out.println(players);
+                    System.out.println("Players from clientthread");
+                    System.out.println(players);
 
-                Gui.updateFromServer(players);
+                    Gui.updateFromServer(players);
+                } else { // gem json
+                    String json = serverResponse.substring(4); // cut of the "gems" part
+                    List<Pair> gemLocations = objectMapper.readValue(json, new TypeReference<>() {});
+                    Gui.updateGems(gemLocations);
+
+
+                }
 
 
             } catch (IOException e) {
