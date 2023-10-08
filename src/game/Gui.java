@@ -224,16 +224,11 @@ public class Gui extends Application {
     }
 
     public static void updateGems(List<Pair> gems) {
-        // remove all gems on the screen
-        for (Pair gem : oldGems) {
 
-        }
-        // redraw all gems
         for (Pair gem : gems) {
             placeGemOnScreen(gem);
         }
-        oldGems = gems;
-        updateScoreTable();
+
 
     }
 

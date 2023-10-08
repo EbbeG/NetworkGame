@@ -72,15 +72,32 @@ public class Server {
 				p.addPoints(-10);
 				Pair pa = getRandomFreePosition();
 				p.setLocation(pa);
-			} else
+			} else {
 				player.addPoints(1);
+			}
 
 			Pair newpos = new Pair(x+delta_x,y+delta_y);
 			player.setLocation(newpos);
+			if (gemTaken(newpos)) {
+				player.addPoints(50);
+				Server.gemUpdate();
+			}
 		}
 
 		Server.update();
 	}
+
+	private static boolean gemTaken(Pair newpos) {
+		for (Pair gem : gems) {
+			if (gem.getX() == newpos.getX() && gem.getY() == newpos.getY()) {
+				gems.remove(gem);
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 
 	public static Player getPlayerAt(int x, int y) {
 		for (Player p : players) {
