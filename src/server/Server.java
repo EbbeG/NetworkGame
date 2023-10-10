@@ -16,7 +16,6 @@ public class Server {
 	 * @param args
 	 */
 	public static void main(String[] args)throws Exception {
-		common c = new common("eksempel");
 		ServerSocket welcomeSocket = new ServerSocket(6789);
 
 		Timer gemSpawnTimer = new Timer();
@@ -31,7 +30,7 @@ public class Server {
 
 		while (true) {
 			Socket connectionSocket = welcomeSocket.accept();
-			ServerThread serverThread = new ServerThread(connectionSocket,c);
+			ServerThread serverThread = new ServerThread(connectionSocket);
 			serverThreads.add(serverThread);
 
 			serverThread.start();
@@ -138,7 +137,6 @@ public class Server {
 	}
 
 	public synchronized static void playerLeft(Player player, ServerThread serverThread) {
-		// need to remove serverthread???
 		serverThreads.remove(serverThread);
 		players.remove(player);
 		Server.update();

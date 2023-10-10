@@ -1,5 +1,4 @@
 package server;
-import game.GameLogic;
 import game.Pair;
 import game.Player;
 
@@ -7,13 +6,11 @@ import java.net.*;
 import java.io.*;
 public class ServerThread extends Thread{
 	Socket connSocket;
-	common c;
 	DataOutputStream outToClient;
 	Player player;
 	
-	public ServerThread(Socket connSocket,common c) {
+	public ServerThread(Socket connSocket) {
 		this.connSocket = connSocket;
-		this.c=c; // Til Web-server opgaven skal denne ikke anvendes
 	}
 	public void run() {
 		try {
@@ -55,7 +52,7 @@ public class ServerThread extends Thread{
 	}
 
 	private void makePlayer(String name) {
-		Pair p = GameLogic.getRandomFreePosition();
+		Pair p = Server.getRandomFreePosition();
 		player = new Player(name,p,"up");
 		Server.addPlayer(player);
 		Server.update();

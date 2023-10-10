@@ -35,7 +35,6 @@ public class Gui extends Application {
     private static TextArea scoreList;
 
     private static List<Player> oldPlayers = new ArrayList<>();
-    private static List<Pair> oldGems = new ArrayList<>();
 
 
     // -------------------------------------------
@@ -145,10 +144,6 @@ public class Gui extends Application {
                 }
             });
 
-            // Putting default players on screen
-//            for (int i = 0; i < GameLogic.players.size(); i++) {
-//                fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
-//            }
             scoreList.setText(getScoreList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,21 +179,13 @@ public class Gui extends Application {
         });
     }
 
-    public static void movePlayerOnScreen(Pair oldpos, Pair newpos, String direction) {
-        removePlayerOnScreen(oldpos);
-        placePlayerOnScreen(newpos, direction);
-    }
+
 
 
     public static void updateScoreTable() {
         Platform.runLater(() -> {
             scoreList.setText(getScoreList());
         });
-    }
-
-    public void playerMoved(int delta_x, int delta_y, String direction) {
-        GameLogic.updatePlayer(delta_x, delta_y, direction);
-        updateScoreTable();
     }
 
     public static String getScoreList() {
